@@ -2,6 +2,7 @@ package edu.com.trailslist
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,37 +26,39 @@ import androidx.compose.ui.unit.sp
 fun TrailDetails(trail: Trail) {
     val screenInfoData = screenInfo()
     val isTablet = screenInfoData.screenWidthData is screenInfoData.ScreenType.Tablet
+            || screenInfoData.screenHeightData is screenInfoData.ScreenType.Tablet;
 
-        Column(
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        Text(
+            text = trail.name,
+            fontSize = if (isTablet) 45.sp else 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
             modifier = Modifier
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Text(
-                text = trail.name,
-                fontSize = if (isTablet) 45.sp else 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier
-                    .padding(bottom = 8.dp)
-                    .fillMaxWidth()
-                    .wrapContentWidth(Alignment.CenterHorizontally)
-            )
-            Image(
-                painter = painterResource(id = trail.image),
-                contentDescription = "Trail image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(if (isTablet) 350.dp else 200.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .padding(bottom = 8.dp)
-            )
-            Text(
-                text = trail.description,
-                fontSize = if (isTablet) 22.sp else 16.sp,
-                color = Color.Gray
-            )
-        }
+                .padding(bottom = 8.dp)
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .wrapContentWidth(Alignment.CenterHorizontally)
+        )
+        Image(
+            painter = painterResource(id = trail.image),
+            contentDescription = "Trail image",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(if (isTablet) 350.dp else 200.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .padding(bottom = 8.dp)
+        )
+        Text(
+            text = trail.description,
+            fontSize = if (isTablet) 22.sp else 16.sp,
+            color = Color.Gray
+        )
+    }
 }
 
 @Preview

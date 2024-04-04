@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -45,13 +46,27 @@ val trails: List<Trail> = listOf(Trail("Główny szlak beskidzki",
         R.drawable.karkonosze),
     Trail("Szlak piastowski",
         "trasa turystyczna w Polsce, przebiegająca przez województwo wielkopolskie i województwo kujawsko-pomorskie. Szlak funkcjonuje przede wszystkim jako trasa wycieczek autokarowych i samochodowych oraz szlak rowerowy (Piastowski Trakt Rowerowy). W 2012 otrzymał Certyfikat Polskiej Organizacji Turystycznej za najlepszy produkt turystyczny, jako unikatowy i wyjątkowo ważny dla polskiego dziedzictwa.",
-        R.drawable.piastowski))
+        R.drawable.piastowski),
+    Trail("Grzbiet karkonoszy",
+        "Jest to pierwsza część, ciągnącego się dalej na wschód, Głównego Szlaku Sudeckiego. Rozpoczyna się w Szklarskiej Porębie, a kończy na Przełęczy Okraj, a jego długość to około 35 kilometrów. Wędrówka jest o tyle przyjemna, że po pokonaniu pierwszego większego podejścia (pod Szrenicę), większość trasy wiedzie grzbietem, bez wielkich przewyższeń. Na szlaku miniemy najpiękniejsze miejsca w Karkonoszach - Twarożnik (fantazyjne skałki) czy słynne i niezwykle widowiskowe Śnieżne Kotły. Trasa od Słonecznika z widokiem na schronisko „Samotnia” pod Śnieżkę jest uznawana za jeden z ładniejszych fragmentów szlaku. Należy pamiętać, że Główny Szlak Sudecki przy schronisku pod Śnieżką odbija w stronę Karpacza. Jeżeli jednak chcemy kontynuować przygodę z grzbietem Karkonoskim, należy iść na najwyższy szczyt Sudetów - Śnieżkę (1603 m n.p.m.) i dalej, do Przełęczy Okraj. Dzięki schroniskom (Schronisko na Hali Szrenickiej, schronisko „Odrodzenie”, schronisko pod Śnieżką), a także kilku schroniskom po stronie czeskiej, wędrówkę można podzielić na kilka dni. Szlak ten można również pokonać zimą - pieszo, na nartach lub rakietach. Jest wówczas szczególnie urokliwy, zwłaszcza dla wielbicieli zimy. Należy jednak pamiętać o odpowiednim przygotowaniu i o tym, że podczas zimowych przejść tempo bardzo spada.",
+        R.drawable.karkonosze),
+    Trail("Grzbiet karkonoszy",
+        "Jest to pierwsza część, ciągnącego się dalej na wschód, Głównego Szlaku Sudeckiego. Rozpoczyna się w Szklarskiej Porębie, a kończy na Przełęczy Okraj, a jego długość to około 35 kilometrów. Wędrówka jest o tyle przyjemna, że po pokonaniu pierwszego większego podejścia (pod Szrenicę), większość trasy wiedzie grzbietem, bez wielkich przewyższeń. Na szlaku miniemy najpiękniejsze miejsca w Karkonoszach - Twarożnik (fantazyjne skałki) czy słynne i niezwykle widowiskowe Śnieżne Kotły. Trasa od Słonecznika z widokiem na schronisko „Samotnia” pod Śnieżkę jest uznawana za jeden z ładniejszych fragmentów szlaku. Należy pamiętać, że Główny Szlak Sudecki przy schronisku pod Śnieżką odbija w stronę Karpacza. Jeżeli jednak chcemy kontynuować przygodę z grzbietem Karkonoskim, należy iść na najwyższy szczyt Sudetów - Śnieżkę (1603 m n.p.m.) i dalej, do Przełęczy Okraj. Dzięki schroniskom (Schronisko na Hali Szrenickiej, schronisko „Odrodzenie”, schronisko pod Śnieżką), a także kilku schroniskom po stronie czeskiej, wędrówkę można podzielić na kilka dni. Szlak ten można również pokonać zimą - pieszo, na nartach lub rakietach. Jest wówczas szczególnie urokliwy, zwłaszcza dla wielbicieli zimy. Należy jednak pamiętać o odpowiednim przygotowaniu i o tym, że podczas zimowych przejść tempo bardzo spada.",
+        R.drawable.karkonosze),
+    Trail("Grzbiet karkonoszy",
+        "Jest to pierwsza część, ciągnącego się dalej na wschód, Głównego Szlaku Sudeckiego. Rozpoczyna się w Szklarskiej Porębie, a kończy na Przełęczy Okraj, a jego długość to około 35 kilometrów. Wędrówka jest o tyle przyjemna, że po pokonaniu pierwszego większego podejścia (pod Szrenicę), większość trasy wiedzie grzbietem, bez wielkich przewyższeń. Na szlaku miniemy najpiękniejsze miejsca w Karkonoszach - Twarożnik (fantazyjne skałki) czy słynne i niezwykle widowiskowe Śnieżne Kotły. Trasa od Słonecznika z widokiem na schronisko „Samotnia” pod Śnieżkę jest uznawana za jeden z ładniejszych fragmentów szlaku. Należy pamiętać, że Główny Szlak Sudecki przy schronisku pod Śnieżką odbija w stronę Karpacza. Jeżeli jednak chcemy kontynuować przygodę z grzbietem Karkonoskim, należy iść na najwyższy szczyt Sudetów - Śnieżkę (1603 m n.p.m.) i dalej, do Przełęczy Okraj. Dzięki schroniskom (Schronisko na Hali Szrenickiej, schronisko „Odrodzenie”, schronisko pod Śnieżką), a także kilku schroniskom po stronie czeskiej, wędrówkę można podzielić na kilka dni. Szlak ten można również pokonać zimą - pieszo, na nartach lub rakietach. Jest wówczas szczególnie urokliwy, zwłaszcza dla wielbicieli zimy. Należy jednak pamiętać o odpowiednim przygotowaniu i o tym, że podczas zimowych przejść tempo bardzo spada.",
+        R.drawable.karkonosze),
+    Trail("Grzbiet karkonoszy",
+        "Jest to pierwsza część, ciągnącego się dalej na wschód, Głównego Szlaku Sudeckiego. Rozpoczyna się w Szklarskiej Porębie, a kończy na Przełęczy Okraj, a jego długość to około 35 kilometrów. Wędrówka jest o tyle przyjemna, że po pokonaniu pierwszego większego podejścia (pod Szrenicę), większość trasy wiedzie grzbietem, bez wielkich przewyższeń. Na szlaku miniemy najpiękniejsze miejsca w Karkonoszach - Twarożnik (fantazyjne skałki) czy słynne i niezwykle widowiskowe Śnieżne Kotły. Trasa od Słonecznika z widokiem na schronisko „Samotnia” pod Śnieżkę jest uznawana za jeden z ładniejszych fragmentów szlaku. Należy pamiętać, że Główny Szlak Sudecki przy schronisku pod Śnieżką odbija w stronę Karpacza. Jeżeli jednak chcemy kontynuować przygodę z grzbietem Karkonoskim, należy iść na najwyższy szczyt Sudetów - Śnieżkę (1603 m n.p.m.) i dalej, do Przełęczy Okraj. Dzięki schroniskom (Schronisko na Hali Szrenickiej, schronisko „Odrodzenie”, schronisko pod Śnieżką), a także kilku schroniskom po stronie czeskiej, wędrówkę można podzielić na kilka dni. Szlak ten można również pokonać zimą - pieszo, na nartach lub rakietach. Jest wówczas szczególnie urokliwy, zwłaszcza dla wielbicieli zimy. Należy jednak pamiętać o odpowiednim przygotowaniu i o tym, że podczas zimowych przejść tempo bardzo spada.",
+        R.drawable.karkonosze))
+
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun TrailItem(trail: Trail) {
     val screenInfoData = screenInfo()
     val isTablet = screenInfoData.screenWidthData is screenInfoData.ScreenType.Tablet
+            || screenInfoData.screenHeightData is screenInfoData.ScreenType.Tablet
 
         Box(
             modifier = Modifier
@@ -85,44 +100,62 @@ fun TrailItem(trail: Trail) {
 }
 
 @Composable
-fun TrailsList(navController: NavController) {
-    val screenInfoData = screenInfo()
-    if (screenInfoData.screenWidthData is screenInfoData.ScreenType.Phone) {
-        LazyColumn {
-            items(trails.size) { index ->
-                val trail = trails[index]
-                Box(modifier = Modifier
-                    .clickable {
-                        navController.navigate(
-                            "trailDetails/${trail.name}/${trail.description}/${trail.image}"
-                        )
-                    }) {
-                    TrailItem(trail = trail)
-                }
+fun phoneUI(navController: NavController) {
+    LazyColumn {
+        items(trails.size) { index ->
+            val trail = trails[index]
+            Box(modifier = Modifier
+                .clickable {
+                    navController.navigate(
+                        "trailDetails/${trail.name}/${trail.description}/${trail.image}"
+                    )
+                }) {
+                TrailItem(trail = trail)
             }
         }
     }
-    else {
-        var expanded by remember { mutableStateOf(true) }
-        var selectedTrail by remember { mutableStateOf<Trail?>(null) }
-        Row {
-            LazyColumn {
-                items(trails.size) { index ->
-                    val trail = trails[index]
-                    Box(modifier = Modifier
-                        .fillMaxWidth(if (expanded) 1f else 0.5f)
-                        .clickable {
-                            expanded = false
-                            selectedTrail = trail
-                        }) {
-                        TrailItem(trail = trail)
-                    }
-                }
-            }
+}
 
-            selectedTrail?.let { trail: Trail ->
-                TrailDetails(trail = trail)
+@Composable
+fun tabletUI(vertical: Boolean) {
+    var expanded by remember { mutableStateOf(true) }
+    var selectedTrail by remember { mutableStateOf<Trail?>(null) }
+    val fill = if (expanded) 1f else 0.5f
+
+    LazyColumn (modifier = Modifier.fillMaxHeight(if (vertical) fill else 1f)) {
+        items(trails.size) { index ->
+            val trail = trails[index]
+            Box(modifier = Modifier
+                .fillMaxWidth(if (vertical) 1f else fill)
+                .clickable {
+                    expanded = false
+                    selectedTrail = trail
+                }) {
+                TrailItem(trail = trail)
             }
+        }
+    }
+
+    selectedTrail?.let { trail: Trail ->
+        TrailDetails(trail = trail)
+    }
+}
+
+@Composable
+fun TrailsList(navController: NavController) {
+    val screenInfoData = screenInfo()
+    if (screenInfoData.screenWidthData is screenInfoData.ScreenType.Phone &&
+        screenInfoData.screenHeightData is screenInfoData.ScreenType.Phone) {
+        phoneUI(navController = navController)
+    }
+    else if (screenInfoData.screenWidthData is screenInfoData.ScreenType.Tablet) {
+        Row {
+            tabletUI(false)
+        }
+    }
+    else {
+        Column {
+            tabletUI(true)
         }
     }
 }

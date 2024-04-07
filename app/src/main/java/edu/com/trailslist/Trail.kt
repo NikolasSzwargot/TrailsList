@@ -4,10 +4,9 @@ import androidx.annotation.DrawableRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "trails")
 data class Trail(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int? = 0,
     val name: String,
     val description: String,
     @DrawableRes val image: Int

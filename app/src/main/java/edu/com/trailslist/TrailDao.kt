@@ -15,6 +15,9 @@ interface TrailDao {
     @Delete
     suspend fun deleteTrail(trail: Trail)
 
-    @Query("SELECT * FROM trail ORDER BY name ASC")
+    @Query("SELECT * FROM trails ORDER BY name ASC")
     fun getTrailsOrderedByName(): Flow<List<Trail>>
+
+    @Query("DELETE FROM trails")
+    suspend fun deleteAllTrails()
 }

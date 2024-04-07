@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -30,6 +31,7 @@ fun TrailApp(){
             val trailImage = backStackEntry.arguments?.getString("trailImage").orEmpty().toInt()
 
             val trail = Trail(
+                1,
                 trailName,
                 trailDescription,
                 trailImage)

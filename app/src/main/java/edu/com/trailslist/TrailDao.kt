@@ -20,4 +20,10 @@ interface TrailDao {
 
     @Query("DELETE FROM trails")
     suspend fun deleteAllTrails()
+
+    @Query("SELECT * FROM trails where id = :id")
+    suspend fun getTrailById(id: Int): Trail
+
+//    @Insert
+//    suspend fun insertMeasuredTime(measuredTime: MeasuredTime)
 }

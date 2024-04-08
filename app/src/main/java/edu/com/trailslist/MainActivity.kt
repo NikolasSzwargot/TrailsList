@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -57,30 +58,32 @@ fun TrailApp(){
     val database = TrailDatabase.getDatabaseInstance(context)
     val dao = database.trailDao()
     val trails by  dao.getTrailsOrderedByName().collectAsState(initial = emptyList())
+    val viewModel: TrailViewModel = viewModel()
 
-        LaunchedEffect(Unit) {
-            if (trails.isEmpty()) {
-                //dao.deleteAllTrails()
-                insertTrails(dao)
-            }
+    LaunchedEffect(Unit) {
+        if (trails.isEmpty()) {
+            //dao.deleteAllTrails()
+            insertTrails(dao)
         }
+    }
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "trailsList") {
         composable("trailsList") {
-            TrailsList(navController, trails)
+            TrailsList(navController, trails, viewModel)
         }
-        composable( "trailDetails/{trailName}/{trailDescription}/{trailImage}") { backStackEntry ->
+        composable( "trailDetails/{trailId}/{trailName}/{trailDescription}/{trailImage}") { backStackEntry ->
+            val trailId = backStackEntry.arguments?.getString("trailId").orEmpty().toInt()
             val trailName = backStackEntry.arguments?.getString("trailName").orEmpty()
             val trailDescription = backStackEntry.arguments?.getString("trailDescription").orEmpty()
             val trailImage = backStackEntry.arguments?.getString("trailImage").orEmpty().toInt()
 
             val trail = Trail(
-                1,
+                trailId,
                 trailName,
                 trailDescription,
                 trailImage)
-            TrailDetails(trail)
+            TrailDetails(trail, viewModel)
         }
     }
 }

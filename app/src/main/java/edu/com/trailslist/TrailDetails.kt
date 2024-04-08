@@ -23,16 +23,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TrailDetails(trail: Trail) {
+fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
     val screenInfoData = screenInfo()
     val isTablet = screenInfoData.screenWidthData is screenInfoData.ScreenType.Tablet
-            || screenInfoData.screenHeightData is screenInfoData.ScreenType.Tablet;
+            || screenInfoData.screenHeightData is screenInfoData.ScreenType.Tablet
+
+
 
     Column(
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+        Stopwatch(viewModel = viewModel)
         Text(
             text = trail.name,
             fontSize = if (isTablet) 45.sp else 24.sp,

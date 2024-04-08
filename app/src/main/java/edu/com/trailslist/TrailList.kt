@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -78,7 +80,7 @@ fun PhoneUI(navController: NavController, trails: List<Trail>) {
             Box(modifier = Modifier
                 .clickable {
                     navController.navigate(
-                        "trailDetails/${trail.name}/${trail.description}/${trail.image}"
+                        "trailDetails/${trail.id}/${trail.name}/${trail.description}/${trail.image}"
                     )
                 }) {
                 TrailItem(trail = trail)
@@ -88,9 +90,20 @@ fun PhoneUI(navController: NavController, trails: List<Trail>) {
 }
 
 @Composable
-fun TabletUI(vertical: Boolean, trails: List<Trail>) {
+fun TabletUI(vertical: Boolean, trails: List<Trail>, viewModel: TrailViewModel) {
     var expanded by remember { mutableStateOf(true) }
     var selectedTrail by remember { mutableStateOf<Trail?>(null) }
+    val selectedTrailId = viewModel.selectedTrailId
+
+    if (selectedTrailId != -1) {
+        val database = TrailDatabase.getDatabaseInstance(LocalContext.current)
+        val dao = database.trailDao()
+        expanded = false
+        LaunchedEffect(Unit) {
+            selectedTrail = dao.getTrailById(selectedTrailId)
+        }
+    }
+
     val fill = if (expanded) 1f else 0.5f
 
     LazyColumn (modifier = Modifier.fillMaxHeight(if (vertical) fill else 1f)) {
@@ -101,6 +114,7 @@ fun TabletUI(vertical: Boolean, trails: List<Trail>) {
                 .clickable {
                     expanded = false
                     selectedTrail = trail
+                    viewModel.updateSelectedTrailId(selectedTrail!!.id!!)
                 }) {
                 TrailItem(trail = trail)
             }
@@ -108,12 +122,12 @@ fun TabletUI(vertical: Boolean, trails: List<Trail>) {
     }
 
     selectedTrail?.let { trail: Trail ->
-        TrailDetails(trail = trail)
+        TrailDetails(trail = trail, viewModel = viewModel)
     }
 }
 
 @Composable
-fun TrailsList(navController: NavController, trails: List<Trail>) {
+fun TrailsList(navController: NavController, trails: List<Trail>, viewModel: TrailViewModel) {
     val screenInfoData = screenInfo()
     if (screenInfoData.screenWidthData is screenInfoData.ScreenType.Phone &&
         screenInfoData.screenHeightData is screenInfoData.ScreenType.Phone) {
@@ -121,12 +135,12 @@ fun TrailsList(navController: NavController, trails: List<Trail>) {
     }
     else if (screenInfoData.screenWidthData is screenInfoData.ScreenType.Tablet) {
         Row {
-            TabletUI(false, trails)
+            TabletUI(false, trails, viewModel)
         }
     }
     else {
         Column {
-            TabletUI(true, trails)
+            TabletUI(true, trails, viewModel)
         }
     }
 }

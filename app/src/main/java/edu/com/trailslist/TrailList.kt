@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -80,7 +81,7 @@ fun PhoneUI(navController: NavController, trails: List<Trail>) {
             Box(modifier = Modifier
                 .clickable {
                     navController.navigate(
-                        "trailDetails/${trail.id}/${trail.name}/${trail.description}/${trail.image}"
+                        "trailDetails/${trail.id}/${trail.name}/${trail.description}/${trail.image}/${trail.measuredTime}"
                     )
                 }) {
                 TrailItem(trail = trail)
@@ -127,8 +128,9 @@ fun TabletUI(vertical: Boolean, trails: List<Trail>, viewModel: TrailViewModel) 
 }
 
 @Composable
-fun TrailsList(navController: NavController, trails: List<Trail>, viewModel: TrailViewModel) {
+fun TrailsList(navController: NavController, viewModel: TrailViewModel) {
     val screenInfoData = screenInfo()
+    val trails by  viewModel.trails.collectAsState()
     if (screenInfoData.screenWidthData is screenInfoData.ScreenType.Phone &&
         screenInfoData.screenHeightData is screenInfoData.ScreenType.Phone) {
         PhoneUI(navController = navController, trails)

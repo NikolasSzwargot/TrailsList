@@ -10,6 +10,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,10 +25,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun Stopwatch(
     viewModel: TrailViewModel,
+    trailTime: Long,
+    id: Int,
     modifier: Modifier = Modifier
 ): Long {
-    var isTracking = viewModel.isTracking
-    var elapsedTime = viewModel.elapsedTime
+    var isTracking by rememberSaveable { mutableStateOf(viewModel.isTracking) }
+    var elapsedTime by rememberSaveable { mutableStateOf(viewModel.elapsedTime) }
+    var savedTime = trailTime
+
 
     if (isTracking) {
         LaunchedEffect(Unit) {
@@ -37,7 +45,8 @@ fun Stopwatch(
     }
 
     Column(modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = formatElapsedTime(elapsedTime),
             color = Color.Black,
@@ -63,7 +72,13 @@ fun Stopwatch(
                 }
             }
             if (!isTracking && elapsedTime != 0L) {
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = {
+                    savedTime = elapsedTime
+                    viewModel.recordMeasuredTime(id, savedTime)
+                    elapsedTime = 0L
+                    viewModel.updateElapsedTime(elapsedTime)
+
+                }) {
                     Text(text = "Zapisz")
                 }
             }

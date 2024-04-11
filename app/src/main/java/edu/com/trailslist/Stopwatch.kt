@@ -25,13 +25,12 @@ import kotlinx.coroutines.delay
 @Composable
 fun Stopwatch(
     viewModel: TrailViewModel,
-    trailTime: Long,
     id: Int,
     modifier: Modifier = Modifier
 ): Long {
     var isTracking by rememberSaveable { mutableStateOf(viewModel.isTracking) }
     var elapsedTime by rememberSaveable { mutableStateOf(viewModel.elapsedTime) }
-    var savedTime = trailTime
+    var savedTime: Long
 
 
     if (isTracking) {

@@ -50,7 +50,7 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
             )
         }
 
-        Stopwatch(viewModel = viewModel, trailTime = trail.measuredTime, id = trail.id!!)
+        Stopwatch(viewModel = viewModel, id = trail.id!!)
         Text(
             text = trail.name,
             fontSize = if (isTablet) 45.sp else 24.sp,

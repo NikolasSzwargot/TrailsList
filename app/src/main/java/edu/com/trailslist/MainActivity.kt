@@ -4,22 +4,33 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
 
+    private val trailDaoProvider = TrailDatabase.TrailDatabaseProvider
+//    private val viewModel = viewModels<TrailViewModel>(trailDaoProvider)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TrailDatabase.TrailDatabaseProvider.initialize(applicationContext)
-        val trailDaoProvider = TrailDatabase.TrailDatabaseProvider
-        val viewModel = TrailViewModel(trailDaoProvider)
-        //viewModel.deleteTrails()
-        viewModel.insertTrailsIfEmpty {
-            recreate()
-        }
+        trailDaoProvider.initialize(applicationContext)
         setContent {
+            val viewModel = viewModel<TrailViewModel>(
+                factory = object : ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                        return TrailViewModel(trailDaoProvider = trailDaoProvider) as T
+                    }
+                }
+            )
+
+            viewModel.insertTrailsIfEmpty {
+                recreate()
+            }
             TrailApp(viewModel = viewModel)
         }
     }

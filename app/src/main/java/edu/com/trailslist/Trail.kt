@@ -9,5 +9,6 @@ data class Trail(
     @PrimaryKey(autoGenerate = true) val id: Int? = 0,
     val name: String,
     val description: String,
-    @DrawableRes val image: Int
+    @DrawableRes val image: Int,
+    val measuredTime: Long
 )

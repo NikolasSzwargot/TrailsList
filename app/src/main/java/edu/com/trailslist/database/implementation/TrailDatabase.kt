@@ -1,4 +1,4 @@
-package edu.com.trailslist
+package edu.com.trailslist.database.implementation
 
 import android.content.Context
 import androidx.room.Database
@@ -6,6 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import edu.com.trailslist.database.entities.Trail
+import edu.com.trailslist.database.dao.TrailDao
+import edu.com.trailslist.database.provider.TrailDaoProvider
 
 @Database(
     entities = [Trail::class],

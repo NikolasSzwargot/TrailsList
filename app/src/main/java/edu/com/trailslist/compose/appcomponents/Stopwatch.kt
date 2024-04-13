@@ -1,4 +1,4 @@
-package edu.com.trailslist
+package edu.com.trailslist.compose.appcomponents
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.com.trailslist.viewmodels.TrailViewModel
 import kotlinx.coroutines.delay
 
 @Composable

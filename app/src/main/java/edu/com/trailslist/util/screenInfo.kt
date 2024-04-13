@@ -1,4 +1,4 @@
-package edu.com.trailslist
+package edu.com.trailslist.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
@@ -6,16 +6,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun screenInfo(): screenInfoData {
+fun screenInfo(): ScreenInfoData {
     val configuration = LocalConfiguration.current
-    return screenInfoData(
+    return ScreenInfoData(
         screenWidthData = when {
-            configuration.screenWidthDp < 840 -> screenInfoData.ScreenType.Phone
-            else -> screenInfoData.ScreenType.Tablet
+            configuration.screenWidthDp < 840 -> ScreenInfoData.ScreenType.Phone
+            else -> ScreenInfoData.ScreenType.Tablet
         },
         screenHeightData = when {
-            configuration.screenHeightDp < 900 -> screenInfoData.ScreenType.Phone
-            else -> screenInfoData.ScreenType.Tablet
+            configuration.screenHeightDp < 900 -> ScreenInfoData.ScreenType.Phone
+            else -> ScreenInfoData.ScreenType.Tablet
         },
         screenWidth = configuration.screenWidthDp.dp,
         screenHeight = configuration.screenHeightDp.dp
@@ -23,7 +23,7 @@ fun screenInfo(): screenInfoData {
 
 }
 
-data class screenInfoData(
+data class ScreenInfoData(
     val screenWidthData: ScreenType,
     val screenHeightData: ScreenType,
     val screenWidth: Dp,

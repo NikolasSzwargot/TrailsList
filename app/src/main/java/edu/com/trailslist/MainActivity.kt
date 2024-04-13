@@ -10,6 +10,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import edu.com.trailslist.compose.appcomponents.TrailDetails
+import edu.com.trailslist.compose.appcomponents.TrailsList
+import edu.com.trailslist.database.entities.Trail
+import edu.com.trailslist.database.implementation.TrailDatabase
+import edu.com.trailslist.viewmodels.TrailViewModel
 
 class MainActivity : ComponentActivity() {
 

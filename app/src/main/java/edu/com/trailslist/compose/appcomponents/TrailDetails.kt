@@ -1,4 +1,4 @@
-package edu.com.trailslist
+package edu.com.trailslist.compose.appcomponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -23,12 +23,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.com.trailslist.R
+import edu.com.trailslist.database.entities.Trail
+import edu.com.trailslist.util.screenInfo
+import edu.com.trailslist.util.ScreenInfoData
+import edu.com.trailslist.viewmodels.TrailViewModel
 
 @Composable
 fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
     val screenInfoData = screenInfo()
-    val isTablet = screenInfoData.screenWidthData is screenInfoData.ScreenType.Tablet
-            || screenInfoData.screenHeightData is screenInfoData.ScreenType.Tablet
+    val isTablet = screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet
+            || screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Tablet
     val measuredTime by viewModel.observeMeasuredTime(trail.id!!).collectAsState(initial = trail.measuredTime)
 
 

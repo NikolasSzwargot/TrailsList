@@ -1,4 +1,4 @@
-package edu.com.trailslist
+package edu.com.trailslist.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
+import edu.com.trailslist.database.dao.insertTrails
+import edu.com.trailslist.database.entities.Trail
+import edu.com.trailslist.database.provider.TrailDaoProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,30 +57,6 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
             } else {
                 _trails.value = tempTrails
             }
-        }
-    }
-
-    fun getTrail(id: Int): Trail? {
-        var trail: Trail? = null
-        viewModelScope.launch {
-            val dao = trailDaoProvider.provideTrailDao()
-            trail = dao.getTrailById(id)
-        }
-        return trail
-    }
-
-    fun setChosenTrail() {
-        viewModelScope.launch {
-            val dao = trailDaoProvider.provideTrailDao()
-            choosenTrail = dao.getTrailById(selectedTrailId)
-        }
-
-    }
-
-    fun deleteTrails() {
-        viewModelScope.launch {
-            val dao = trailDaoProvider.provideTrailDao()
-            dao.deleteAllTrails()
         }
     }
 

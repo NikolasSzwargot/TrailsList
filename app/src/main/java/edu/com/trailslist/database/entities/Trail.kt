@@ -1,4 +1,4 @@
-package edu.com.trailslist
+package edu.com.trailslist.database.entities
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity

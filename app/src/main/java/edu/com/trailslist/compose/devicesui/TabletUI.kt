@@ -40,14 +40,15 @@ fun TabletUI(vertical: Boolean, trails: List<Trail>, viewModel: TrailViewModel) 
     val fill = if (expanded) 1f else 0.5f
 
     if (vertical) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 140.dp),
-            modifier = Modifier.fillMaxHeight(if (vertical) fill else 1f)
+        LazyHorizontalGrid(
+            rows = GridCells.Adaptive(minSize = 200.dp),
+            modifier = Modifier.fillMaxHeight(fill)
+                .fillMaxWidth()
         ) {
             items(trails.size) { index ->
                 val trail = trails[index]
                 Box(modifier = Modifier
-                    .fillMaxWidth(if (vertical) 1f else fill)
+                    .fillMaxWidth(1f)
                     .clickable {
                         expanded = false
                         selectedTrail = trail
@@ -60,14 +61,15 @@ fun TabletUI(vertical: Boolean, trails: List<Trail>, viewModel: TrailViewModel) 
     }
     else
     {
-        LazyHorizontalGrid(
-            rows = GridCells.Adaptive(minSize = 140.dp),
-            modifier = Modifier.fillMaxHeight(if (vertical) fill else 1f)
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 140.dp),
+            modifier = Modifier.fillMaxHeight(1f)
+                .fillMaxWidth(fill)
         ) {
             items(trails.size) { index ->
                 val trail = trails[index]
                 Box(modifier = Modifier
-                    .fillMaxWidth(if (vertical) 1f else fill)
+                    .fillMaxWidth(fill)
                     .clickable {
                         expanded = false
                         selectedTrail = trail

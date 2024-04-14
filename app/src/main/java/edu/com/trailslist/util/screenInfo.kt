@@ -10,7 +10,7 @@ fun screenInfo(): ScreenInfoData {
     val configuration = LocalConfiguration.current
     return ScreenInfoData(
         screenWidthData = when {
-            configuration.screenWidthDp < 600 -> ScreenInfoData.ScreenType.Phone
+            configuration.screenWidthDp < 840 -> ScreenInfoData.ScreenType.Phone
             else -> ScreenInfoData.ScreenType.Tablet
         },
         screenHeightData = when {
@@ -31,7 +31,6 @@ data class ScreenInfoData(
     ) {
     sealed class ScreenType {
         object Phone: ScreenType()
-        object RotatedPhone: ScreenType()
         object  Tablet: ScreenType()
     }
 }

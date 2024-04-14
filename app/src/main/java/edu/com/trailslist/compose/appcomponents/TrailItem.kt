@@ -30,24 +30,19 @@ import edu.com.trailslist.util.screenInfo
 @Composable
 fun TrailItem(trail: Trail) {
     val screenInfoData = screenInfo()
-    val isTablet = screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet
-            || screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Tablet
+    val isTablet = screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Tablet
 
     Box(
         modifier = Modifier
-            .padding(8.dp)
-            .width(180.dp)
-            .height(190.dp)
+            .padding(if (isTablet) 12.dp else 8.dp)
+            .width(if (isTablet) 200.dp else 180.dp)
+            .height(if (isTablet) 180.dp else 190.dp)
             .clip(RoundedCornerShape(16.dp))
             .fillMaxSize()
             .border(width = 5.dp,
                 color = Color(0, 153, 76),
                 shape = CutCornerShape(8.dp)
             )
-            .padding(10.dp)
-
-            //.m
-            //.border(if (isTablet) 2.dp else 1.dp, Color.Black)
     ) {
         Column(
             modifier = Modifier

@@ -20,10 +20,6 @@ fun TrailsList(navController: NavController, viewModel: TrailViewModel) {
         screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Phone) {
         PhoneUI(navController = navController, trails)
     }
-    else if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.RotatedPhone &&
-        screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Phone) {
-        PhoneUI(navController = navController, trails = trails)
-    }
     else if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet) {
         Row {
             TabletUI(false, trails, viewModel)

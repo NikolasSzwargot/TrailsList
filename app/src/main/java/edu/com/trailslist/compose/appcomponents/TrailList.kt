@@ -8,8 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import edu.com.trailslist.compose.devicesui.PhoneUI
 import edu.com.trailslist.compose.devicesui.TabletUI
-import edu.com.trailslist.util.screenInfo
 import edu.com.trailslist.util.ScreenInfoData
+import edu.com.trailslist.util.screenInfo
 import edu.com.trailslist.viewmodels.TrailViewModel
 
 @Composable
@@ -19,6 +19,10 @@ fun TrailsList(navController: NavController, viewModel: TrailViewModel) {
     if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Phone &&
         screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Phone) {
         PhoneUI(navController = navController, trails)
+    }
+    else if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.RotatedPhone &&
+        screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Phone) {
+        PhoneUI(navController = navController, trails = trails)
     }
     else if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet) {
         Row {

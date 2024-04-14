@@ -8,8 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import edu.com.trailslist.compose.devicesui.PhoneUI
 import edu.com.trailslist.compose.devicesui.TabletUI
-import edu.com.trailslist.util.screenInfo
 import edu.com.trailslist.util.ScreenInfoData
+import edu.com.trailslist.util.screenInfo
 import edu.com.trailslist.viewmodels.TrailViewModel
 
 @Composable

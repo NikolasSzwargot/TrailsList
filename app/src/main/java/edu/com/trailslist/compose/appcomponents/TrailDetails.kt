@@ -1,8 +1,15 @@
 package edu.com.trailslist.compose.appcomponents
 
+import android.content.Intent
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.com.trailslist.R
 import edu.com.trailslist.database.entities.Trail
-import edu.com.trailslist.util.screenInfo
 import edu.com.trailslist.util.ScreenInfoData
+import edu.com.trailslist.util.screenInfo
 import edu.com.trailslist.viewmodels.TrailViewModel
 
 @Composable
@@ -35,6 +42,8 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
     val isTablet = screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet
             || screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Tablet
     val measuredTime by viewModel.observeMeasuredTime(trail.id!!).collectAsState(initial = trail.measuredTime)
+        val cameraLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+    }
 
 
 
@@ -81,6 +90,16 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
             fontSize = if (isTablet) 22.sp else 16.sp,
             color = Color.Gray
         )
+        Spacer(modifier = Modifier.height(35.dp))
+    }
+    Box(modifier = Modifier
+        .padding(16.dp)
+        .fillMaxSize()
+    ) {
+        SnapFab(modifier = Modifier.align(Alignment.BottomEnd)) {
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraLauncher.launch(cameraIntent)
+        }
     }
 }
 
@@ -117,5 +136,6 @@ fun TrailDetailsPreview() {
             fontSize = 16.sp,
             color = Color.Gray
         )
+        
     }
 }

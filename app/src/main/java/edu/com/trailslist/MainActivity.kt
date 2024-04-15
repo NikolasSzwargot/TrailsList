@@ -53,26 +53,35 @@ fun TrailApp(viewModel: TrailViewModel){
         bottomBar = { BottomNavBar(navController = navController) }
     ) { _ ->
         NavHost(navController = navController, startDestination = "homeScreen") {
-            composable("trailsList") {
-                TrailsList(navController, viewModel)
+            composable("lowlying") {
+                viewModel.updateSelectedTrailId(-1)
+                viewModel.setToLowLying()
+                TrailsList(navController = navController, viewModel = viewModel)
+            }
+            composable("mountain") {
+                viewModel.updateSelectedTrailId(-1)
+                viewModel.setToMountain()
+                TrailsList(navController = navController, viewModel = viewModel)
             }
             composable("homeScreen") {
                 HomeScreen()
             }
-            composable("trailDetails/{trailId}/{trailName}/{trailDescription}/{trailImage}/{trailTime}") { backStackEntry ->
+            composable("trailDetails/{trailId}/{trailName}/{trailDescription}/{trailImage}/{trailTime}/{type}") { backStackEntry ->
                 val trailId = backStackEntry.arguments?.getString("trailId").orEmpty().toInt()
                 val trailName = backStackEntry.arguments?.getString("trailName").orEmpty()
                 val trailDescription =
                     backStackEntry.arguments?.getString("trailDescription").orEmpty()
                 val trailImage = backStackEntry.arguments?.getString("trailImage").orEmpty().toInt()
                 val trailTime = backStackEntry.arguments?.getString("trailTime").orEmpty().toLong()
+                val type = backStackEntry.arguments?.getString("type").orEmpty().toInt()
 
                 val trail = Trail(
                     trailId,
                     trailName,
                     trailDescription,
                     trailImage,
-                    trailTime
+                    trailTime,
+                    type
                 )
                 TrailDetails(trail, viewModel)
             }

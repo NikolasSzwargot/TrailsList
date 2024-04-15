@@ -37,6 +37,9 @@ fun TabletUI(vertical: Boolean, trails: List<Trail>, viewModel: TrailViewModel) 
             selectedTrail = dao.getTrailById(selectedTrailId)
         }
     }
+    else {
+        expanded = true
+    }
 
     val fill = if (expanded) 1f else 0.5f
     Box(modifier = Modifier.fillMaxSize()) {

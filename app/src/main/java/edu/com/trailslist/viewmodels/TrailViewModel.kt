@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import edu.com.trailslist.database.dao.insertTrails
 import edu.com.trailslist.database.entities.Trail
 import edu.com.trailslist.database.provider.TrailDaoProvider
+import edu.com.trailslist.util.TrailType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,5 +64,19 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
     fun observeMeasuredTime(trailId: Int): Flow<Long?> {
         val dao = trailDaoProvider.provideTrailDao()
         return dao.getMeasuredTime(trailId).asFlow()
+    }
+
+    fun setToLowLying() {
+        viewModelScope.launch {
+            val dao = trailDaoProvider.provideTrailDao()
+            _trails.value = dao.getTrailsByType(TrailType.LOW_LYING).first()
+        }
+    }
+
+    fun setToMountain() {
+        viewModelScope.launch {
+            val dao = trailDaoProvider.provideTrailDao()
+            _trails.value = dao.getTrailsByType(TrailType.MOUNTAIN).first()
+        }
     }
 }

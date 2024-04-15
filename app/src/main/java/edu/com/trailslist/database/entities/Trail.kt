@@ -10,5 +10,6 @@ data class Trail(
     val name: String,
     val description: String,
     @DrawableRes val image: Int,
-    val measuredTime: Long
+    val measuredTime: Long,
+    val type: Int
 )

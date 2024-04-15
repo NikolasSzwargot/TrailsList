@@ -46,8 +46,8 @@ fun BottomNavBar(navController: NavController) {
                     selectedItemIndex = index
                     when (index) {
                         0 -> navController.navigate("homeScreen")
-                        1 -> navController.navigate("trailsList")
-                        2 -> navController.navigate("trailsList")
+                        1 -> navController.navigate("lowlying")
+                        2 -> navController.navigate("mountain")
                     }
                 },
                 label = {Text(text = bottomNavigationItem.title)},

@@ -1,4 +1,4 @@
-package edu.com.trailslist.compose.appcomponents
+package edu.com.trailslist.compose.appcomponents.trailscomponents
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FloatingActionButton

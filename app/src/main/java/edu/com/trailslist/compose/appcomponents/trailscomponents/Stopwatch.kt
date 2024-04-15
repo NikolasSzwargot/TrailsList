@@ -1,4 +1,4 @@
-package edu.com.trailslist.compose.appcomponents
+package edu.com.trailslist.compose.appcomponents.trailscomponents
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

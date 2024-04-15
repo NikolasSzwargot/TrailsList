@@ -1,4 +1,4 @@
-package edu.com.trailslist.compose.appcomponents
+package edu.com.trailslist.compose.appcomponents.trailscomponents
 
 import android.content.Intent
 import android.provider.MediaStore
@@ -90,13 +90,14 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
             fontSize = if (isTablet) 22.sp else 16.sp,
             color = Color.Gray
         )
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(130.dp))
     }
     Box(modifier = Modifier
         .padding(16.dp)
         .fillMaxSize()
     ) {
-        SnapFab(modifier = Modifier.align(Alignment.BottomEnd)) {
+        SnapFab(modifier = Modifier.align(Alignment.BottomEnd)
+            .padding(bottom = 80.dp)) {
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             cameraLauncher.launch(cameraIntent)
         }

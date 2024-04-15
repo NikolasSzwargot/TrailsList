@@ -1,4 +1,4 @@
-package edu.com.trailslist.compose.appcomponents
+package edu.com.trailslist.compose.appcomponents.trailscomponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

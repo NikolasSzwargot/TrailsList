@@ -1,7 +1,5 @@
-package edu.com.trailslist.compose.appcomponents
+package edu.com.trailslist.compose.appcomponents.trailscomponents
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,13 +19,9 @@ fun TrailsList(navController: NavController, viewModel: TrailViewModel) {
         PhoneUI(navController = navController, trails)
     }
     else if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet) {
-        Row {
-            TabletUI(false, trails, viewModel)
-        }
+        TabletUI(false, trails, viewModel)
     }
     else {
-        Column {
-            TabletUI(true, trails, viewModel)
-        }
+        TabletUI(true, trails, viewModel)
     }
 }

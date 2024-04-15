@@ -21,7 +21,7 @@ fun PhoneUI(navController: NavController, trails: List<Trail>) {
             Box(modifier = Modifier
                 .clickable {
                     navController.navigate(
-                        "trailDetails/${trail.id}/${trail.name}/${trail.description}/${trail.image}/${trail.measuredTime}"
+                        "trailDetails/${trail.id}/${trail.name}/${trail.description}/${trail.image}/${trail.measuredTime}/${trail.type}"
                     )
                 }) {
                 TrailItem(trail = trail)

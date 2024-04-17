@@ -26,7 +26,7 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
         private set
     var elapsedTime by mutableStateOf(0L)
         private set
-    var choosenTrail by mutableStateOf<Trail?>(null)
+    var displayedType: Int = -1
         private set
 
     fun updateSelectedTrailId(newId: Int) {
@@ -35,6 +35,10 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
 
     fun updateIsTracking(newVal: Boolean) {
         isTracking = newVal
+    }
+
+    fun updateDisplayedType(type: Int) {
+        displayedType = type
     }
 
     fun updateElapsedTime(newElapsedTime: Long) {
@@ -68,6 +72,7 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
 
     fun setToLowLying() {
         viewModelScope.launch {
+            updateDisplayedType(TrailType.LOW_LYING)
             val dao = trailDaoProvider.provideTrailDao()
             _trails.value = dao.getTrailsByType(TrailType.LOW_LYING).first()
         }
@@ -75,6 +80,7 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
 
     fun setToMountain() {
         viewModelScope.launch {
+            updateDisplayedType(TrailType.MOUNTAIN)
             val dao = trailDaoProvider.provideTrailDao()
             _trails.value = dao.getTrailsByType(TrailType.MOUNTAIN).first()
         }

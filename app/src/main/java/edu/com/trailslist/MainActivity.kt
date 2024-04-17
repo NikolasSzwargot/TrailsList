@@ -18,6 +18,7 @@ import edu.com.trailslist.compose.appcomponents.trailscomponents.TrailDetails
 import edu.com.trailslist.compose.appcomponents.trailscomponents.TrailsList
 import edu.com.trailslist.database.entities.Trail
 import edu.com.trailslist.database.implementation.TrailDatabase
+import edu.com.trailslist.util.TrailType
 import edu.com.trailslist.viewmodels.TrailViewModel
 
 class MainActivity : ComponentActivity() {
@@ -54,12 +55,16 @@ fun TrailApp(viewModel: TrailViewModel){
     ) { _ ->
         NavHost(navController = navController, startDestination = "homeScreen") {
             composable("lowlying") {
-                viewModel.updateSelectedTrailId(-1)
+                if (viewModel.displayedType != TrailType.LOW_LYING) {
+                    viewModel.updateSelectedTrailId(-1)
+                }
                 viewModel.setToLowLying()
                 TrailsList(navController = navController, viewModel = viewModel)
             }
             composable("mountain") {
-                viewModel.updateSelectedTrailId(-1)
+                if (viewModel.displayedType != TrailType.MOUNTAIN) {
+                    viewModel.updateSelectedTrailId(-1)
+                }
                 viewModel.setToMountain()
                 TrailsList(navController = navController, viewModel = viewModel)
             }

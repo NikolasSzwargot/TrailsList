@@ -2,7 +2,6 @@ package edu.com.trailslist.compose.appcomponents.trailscomponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,17 +33,19 @@ fun TrailItem(trail: Trail) {
     val screenInfoData = screenInfo()
     val isTablet = screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Tablet
 
-    Box(
+    ElevatedCard(
         modifier = Modifier
             .padding(if (isTablet) 12.dp else 8.dp)
             .width(if (isTablet) 200.dp else 180.dp)
             .height(if (isTablet) 180.dp else 190.dp)
             .clip(RoundedCornerShape(16.dp))
             .fillMaxSize()
-            .border(width = 5.dp,
+            .border(
+                width = 5.dp,
                 color = Color(0, 153, 76),
                 shape = CutCornerShape(8.dp)
-            )
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
         Column(
             modifier = Modifier

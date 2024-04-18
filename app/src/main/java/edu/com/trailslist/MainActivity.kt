@@ -24,7 +24,6 @@ import edu.com.trailslist.viewmodels.TrailViewModel
 class MainActivity : ComponentActivity() {
 
     private val trailDaoProvider = TrailDatabase.TrailDatabaseProvider
-//    private val viewModel = viewModels<TrailViewModel>(trailDaoProvider)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -19,9 +19,9 @@ fun TrailsList(navController: NavController, viewModel: TrailViewModel) {
         PhoneUI(navController = navController, trails)
     }
     else if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet) {
-        TabletUI(false, trails, viewModel)
+        TabletUI(false, trails, viewModel, navController)
     }
     else {
-        TabletUI(true, trails, viewModel)
+        TabletUI(true, trails, viewModel, navController)
     }
 }

@@ -13,27 +13,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
-import edu.com.trailslist.util.BottomNavigationItem
+import edu.com.trailslist.util.NavigationItem
 
 @Composable
 fun BottomNavBar(navController: NavController) {
     val navItems = listOf(
-        BottomNavigationItem(
+        NavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home
         ),
-        BottomNavigationItem(
+        NavigationItem(
             title = "Low-Laying",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home
         ),
-        BottomNavigationItem(
+        NavigationItem(
             title = "Mountains",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home
         )
-
     )
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)

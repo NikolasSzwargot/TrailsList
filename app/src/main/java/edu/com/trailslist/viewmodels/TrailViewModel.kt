@@ -28,6 +28,12 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
         private set
     var displayedType: Int = -1
         private set
+    var lastOpenedTrailId by mutableStateOf(-1)
+        private set
+    var lastOpenedTrail: Trail? = null
+        private set
+    var openedTrail: Trail? = null
+        private set
 
     fun updateSelectedTrailId(newId: Int) {
         selectedTrailId = newId
@@ -43,6 +49,21 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
 
     fun updateElapsedTime(newElapsedTime: Long) {
         elapsedTime = newElapsedTime
+    }
+
+    fun updateLastOpenedTrailId(id: Int) {
+        lastOpenedTrailId = id
+    }
+
+    fun updateLastOpenedTrail(trail: Trail) {
+        lastOpenedTrail = trail
+    }
+
+    fun updateOpenedTrail(id: Int) {
+        viewModelScope.launch {
+            val dao = trailDaoProvider.provideTrailDao()
+            openedTrail = dao.getTrailById(id)
+        }
     }
 
     fun recordMeasuredTime(id: Int, time: Long) {
@@ -83,6 +104,13 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
             updateDisplayedType(TrailType.MOUNTAIN)
             val dao = trailDaoProvider.provideTrailDao()
             _trails.value = dao.getTrailsByType(TrailType.MOUNTAIN).first()
+        }
+    }
+
+    fun setToAll() {
+        viewModelScope.launch {
+            val dao = trailDaoProvider.provideTrailDao()
+            _trails.value = dao.getTrailsOrderedByName().first()
         }
     }
 }

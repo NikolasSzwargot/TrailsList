@@ -1,6 +1,7 @@
 package edu.com.trailslist.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,12 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -42,9 +40,6 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
     val scope = rememberCoroutineScope()
     val navItems = getNavItems()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    var selectedItemIndex by rememberSaveable {
-        mutableStateOf(0)
-    }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -52,14 +47,14 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                 navItems.forEachIndexed { index, navigationItem ->
                     NavigationDrawerItem(
                         label = { Text(text = navigationItem.title) },
-                        selected = index == selectedItemIndex,
+                        selected = index == viewModel.selectedItemIndex,
                         onClick = {
                             when (index) {
                                 0 -> navController.navigate("homeScreen")
                                 1 -> navController.navigate("lowlying")
                                 2 -> navController.navigate("mountain")
                             }
-                            selectedItemIndex = index
+                            viewModel.selectedItemIndex = index
                             scope.launch {
                                 drawerState.close()
                             }
@@ -67,7 +62,7 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         },
                         icon = {
                             Icon(
-                                imageVector = if (index == selectedItemIndex){
+                                imageVector = if (index == viewModel.selectedItemIndex){
                                     navigationItem.selectedIcon
                                 } else navigationItem.unselectedIcon,
                                 contentDescription = "Menu icon")
@@ -101,6 +96,17 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(values)
+                            .pointerInput(Unit){
+                                detectHorizontalDragGestures { change, dragAmount ->
+                                    if (dragAmount < -10) {
+                                        navController.navigate("mountain")
+                                        viewModel.selectedItemIndex = 2
+                                    } else if (dragAmount > 10) {
+                                        navController.navigate("homeScreen")
+                                        viewModel.selectedItemIndex = 0
+                                    }
+                                }
+                            }
                     ) {
                         TrailsList(navController = navController, viewModel = viewModel)
                     }
@@ -111,6 +117,17 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(values)
+                            .pointerInput(Unit){
+                                detectHorizontalDragGestures { change, dragAmount ->
+                                    if (dragAmount < -10) {
+                                        navController.navigate("homeScreen")
+                                        viewModel.selectedItemIndex = 0
+                                    } else if (dragAmount > 10) {
+                                        navController.navigate("lowlying")
+                                        viewModel.selectedItemIndex = 1
+                                    }
+                                }
+                            }
                     ) {
                         TrailsList(navController = navController, viewModel = viewModel)
                     }
@@ -120,6 +137,17 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(values)
+                            .pointerInput(Unit){
+                                detectHorizontalDragGestures { change, dragAmount ->
+                                        if (dragAmount < -10) {
+                                            navController.navigate("lowlying")
+                                            viewModel.selectedItemIndex = 1
+                                        } else if (dragAmount > 10) {
+                                            navController.navigate("mountain")
+                                            viewModel.selectedItemIndex = 2
+                                        }
+                                    }
+                            }
                     ) {
                         HomeScreen()
                     }

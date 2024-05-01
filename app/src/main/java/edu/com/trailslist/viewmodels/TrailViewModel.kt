@@ -34,6 +34,7 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
         private set
     var openedTrail: Trail? = null
         private set
+    var selectedItemIndex by mutableStateOf(0)
 
     fun updateSelectedTrailId(newId: Int) {
         selectedTrailId = newId
@@ -113,4 +114,5 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
             _trails.value = dao.getTrailsOrderedByName().first()
         }
     }
+
 }

@@ -1,18 +1,13 @@
 package edu.com.trailslist.compose.appcomponents.trailscomponents
 
-import android.content.Intent
-import android.provider.MediaStore
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,8 +38,8 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
     val isTablet = screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet
             || screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Tablet
     val measuredTime by viewModel.observeMeasuredTime(trail.id!!).collectAsState(initial = trail.measuredTime)
-        val cameraLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-    }
+//        val cameraLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+//    }
 
 
 
@@ -52,6 +48,11 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+        if (isTablet) {
+            Image(painter = painterResource(id = trail.image), contentDescription = "Trail Image",
+                modifier = Modifier.height(400.dp).width(800.dp).align(Alignment.CenterHorizontally),
+                contentScale = ContentScale.FillWidth)
+        }
 
         if (measuredTime != 0L) {
             Text(
@@ -76,15 +77,6 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
                 .fillMaxHeight()
                 .wrapContentWidth(Alignment.CenterHorizontally)
         )
-        Image(
-            painter = painterResource(id = trail.image),
-            contentDescription = "Trail image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(if (isTablet) 350.dp else 200.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .padding(bottom = 8.dp)
-        )
         Text(
             text = trail.description,
             fontSize = if (isTablet) 22.sp else 16.sp,
@@ -92,16 +84,15 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
         )
         Spacer(modifier = Modifier.height(130.dp))
     }
-    Box(modifier = Modifier
-        .padding(16.dp)
-        .fillMaxSize()
-    ) {
-        SnapFab(modifier = Modifier.align(Alignment.BottomEnd)
-            .padding(bottom = 80.dp)) {
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            cameraLauncher.launch(cameraIntent)
-        }
-    }
+//    Box(modifier = Modifier
+//        .fillMaxSize()
+//    ) {
+//        SnapFab(modifier = Modifier.align(Alignment.BottomEnd)
+//            .padding(end = 5.dp, bottom = 10.dp)) {
+//            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            cameraLauncher.launch(cameraIntent)
+//        }
+//    }
 }
 
 @Preview

@@ -38,6 +38,7 @@ class TrailViewModel(private val trailDaoProvider: TrailDaoProvider): ViewModel(
     var detailsOpened by mutableStateOf(false)
     var selectedImageId by mutableStateOf(-1)
     var selectedTrailName by mutableStateOf("")
+    var animate by mutableStateOf(true)
 
     fun updateSelectedTrailId(newId: Int) {
         selectedTrailId = newId

@@ -63,7 +63,6 @@ fun TrailItem(trail: Trail) {
                 fontSize = TrailTheme.typography.titleNormal.fontSize,
                 fontWeight = TrailTheme.typography.titleNormal.fontWeight,
                 fontFamily = TrailTheme.typography.titleNormal.fontFamily,
-                color = TrailTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
             )
             //}

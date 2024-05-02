@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -18,13 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import edu.com.trailslist.database.entities.Trail
+import edu.com.trailslist.ui.theme.TrailTheme
 import edu.com.trailslist.util.ScreenInfoData
 import edu.com.trailslist.util.screenInfo
 
@@ -42,8 +39,8 @@ fun TrailItem(trail: Trail) {
             .fillMaxSize()
             .border(
                 width = 5.dp,
-                color = Color(0, 153, 76),
-                shape = CutCornerShape(8.dp)
+                color = TrailTheme.colorScheme.borders,
+                shape = TrailTheme.shape.card
             ),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
@@ -63,9 +60,10 @@ fun TrailItem(trail: Trail) {
             //Column {
             Text(
                 text = trail.name,
-                fontSize = 16.sp,//if (isTablet) 25.sp else 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
+                fontSize = TrailTheme.typography.titleNormal.fontSize,
+                fontWeight = TrailTheme.typography.titleNormal.fontWeight,
+                fontFamily = TrailTheme.typography.titleNormal.fontFamily,
+                color = TrailTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
             )
             //}

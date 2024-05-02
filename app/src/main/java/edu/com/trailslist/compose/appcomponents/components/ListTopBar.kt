@@ -9,6 +9,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import edu.com.trailslist.ui.theme.TrailTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -26,7 +27,9 @@ fun ListTopBar(drawerState: DrawerState, scope: CoroutineScope)
                 }
             }) {
                 Icon(
-                    imageVector = Icons.Default.Menu, contentDescription = "Navigation Menu")
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = "Navigation Menu",
+                    tint = TrailTheme.colorScheme.icons)
             }
         }
     )

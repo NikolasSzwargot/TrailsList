@@ -16,17 +16,18 @@ import kotlinx.coroutines.launch
 @Composable
 fun ListTopBar(drawerState: DrawerState, scope: CoroutineScope)
 {
-    TopAppBar(title = {
-    Text(text = "TrailApp")
-},
-    navigationIcon = {
-        IconButton(onClick = {
-            scope.launch {
-                drawerState.open()
+        TopAppBar(title = {
+            Text(text = "TrailApp")
+        },
+        navigationIcon = {
+            IconButton(onClick = {
+                scope.launch {
+                    drawerState.open()
+                }
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Menu, contentDescription = "Navigation Menu")
             }
-        }) {
-            Icon(
-                imageVector = Icons.Default.Menu, contentDescription = "Navigation Menu")
         }
-    }
-) }
+    )
+}

@@ -1,23 +1,33 @@
 package edu.com.trailslist.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +39,9 @@ import edu.com.trailslist.database.entities.Trail
 import edu.com.trailslist.util.getNavItems
 import edu.com.trailslist.viewmodels.TrailViewModel
 import kotlinx.coroutines.launch
+import me.onebone.toolbar.CollapsingToolbarScaffold
+import me.onebone.toolbar.ScrollStrategy
+import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -37,6 +50,8 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
     val scope = rememberCoroutineScope()
     val navItems = getNavItems()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val state = rememberCollapsingToolbarScaffoldState()
+    val textSize = (18 + (30 - 12) * state.toolbarState.progress).sp
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -68,11 +83,40 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
             }
         },
         drawerState = drawerState) {
-        Scaffold(
+        CollapsingToolbarScaffold(
             modifier = Modifier
                 .fillMaxSize(),
-            topBar = { ListTopBar(drawerState = drawerState, scope = scope) }
-        ) { values ->
+            scrollStrategy = if (!viewModel.detailsOpened || textSize.value == 18f) {
+                ScrollStrategy.ExitUntilCollapsed
+            } else {
+                   ScrollStrategy.EnterAlways
+                   },
+            state = state,
+            toolbar = {
+                if (!viewModel.detailsOpened) {
+                ListTopBar(drawerState = drawerState, scope = scope)
+            } else {
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .pin()
+                    .background(color = MaterialTheme.colorScheme.primary)
+                )
+                
+                Image(painter = (painterResource(id = viewModel.selectedImageId)),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
+                    alpha = if (textSize.value == 18f) 0f else 1f,
+                    modifier = Modifier.fillMaxWidth())
+                    
+                    Text(
+                        text = "Szlak",
+                        style = TextStyle(color = Color.White, fontSize = textSize),
+                        modifier = Modifier.padding(16.dp)
+                    )
+            }
+            }
+        ) {
             NavHost(navController = navController, startDestination = "homeScreen") {
                 composable("lowlying") {
                     viewModel.setToLowLying()
@@ -80,7 +124,6 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(values)
                             .pointerInput(Unit) {
                                 detectHorizontalDragGestures { change, dragAmount ->
                                     if (dragAmount < -10) {
@@ -102,7 +145,6 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(values)
                             .pointerInput(Unit) {
                                 detectHorizontalDragGestures { change, dragAmount ->
                                     if (dragAmount < -10) {
@@ -123,7 +165,6 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(values)
                             .pointerInput(Unit) {
                                 detectHorizontalDragGestures { change, dragAmount ->
                                     if (dragAmount < -10) {
@@ -158,11 +199,11 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         trailTime,
                         type
                     )
+                    viewModel.selectedImageId = trailImage
                     viewModel.detailsOpened = true
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(values)
                     ) {
                         TrailDetails(trail, viewModel)
                     }

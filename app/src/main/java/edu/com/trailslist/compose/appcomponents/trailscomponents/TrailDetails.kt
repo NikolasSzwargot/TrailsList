@@ -1,9 +1,15 @@
 package edu.com.trailslist.compose.appcomponents.trailscomponents
 
+import android.content.Intent
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.com.trailslist.R
 import edu.com.trailslist.database.entities.Trail
+import edu.com.trailslist.ui.theme.TrailTheme
 import edu.com.trailslist.util.ScreenInfoData
 import edu.com.trailslist.util.screenInfo
 import edu.com.trailslist.viewmodels.TrailViewModel
@@ -38,8 +45,9 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
     val isTablet = screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Tablet
             || screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Tablet
     val measuredTime by viewModel.observeMeasuredTime(trail.id!!).collectAsState(initial = trail.measuredTime)
-//        val cameraLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-//    }
+        val cameraLauncher =
+            rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+            }
 
 
 
@@ -57,8 +65,10 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
         if (measuredTime != 0L) {
             Text(
                 text = "Ostatni czas: " + formatElapsedTime(measuredTime ?: trail.measuredTime),
-                fontSize = 20.sp,
-                color = Color.Gray,
+                fontSize = TrailTheme.typography.label.fontSize,
+                fontFamily = TrailTheme.typography.label.fontFamily,
+                fontWeight = TrailTheme.typography.label.fontWeight,
+                color = TrailTheme.colorScheme.secondary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 8.dp)
@@ -68,8 +78,9 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
         Stopwatch(viewModel = viewModel, id = trail.id!!)
         Text(
             text = trail.name,
-            fontSize = if (isTablet) 45.sp else 24.sp,
-            fontWeight = FontWeight.Bold,
+            fontSize = if (isTablet) 45.sp else TrailTheme.typography.titleLarge.fontSize,
+            fontWeight = TrailTheme.typography.titleLarge.fontWeight,
+            fontFamily = TrailTheme.typography.titleLarge.fontFamily,
             color = Color.Black,
             modifier = Modifier
                 .padding(bottom = 8.dp)
@@ -79,20 +90,23 @@ fun TrailDetails(trail: Trail, viewModel: TrailViewModel) {
         )
         Text(
             text = trail.description,
-            fontSize = if (isTablet) 22.sp else 16.sp,
-            color = Color.Gray
+            fontSize = if (isTablet) 22.sp else TrailTheme.typography.body.fontSize,
+            fontWeight = TrailTheme.typography.body.fontWeight,
+            fontFamily = TrailTheme.typography.body.fontFamily,
+            color = TrailTheme.colorScheme.secondary
         )
         Spacer(modifier = Modifier.height(130.dp))
     }
-//    Box(modifier = Modifier
-//        .fillMaxSize()
-//    ) {
-//        SnapFab(modifier = Modifier.align(Alignment.BottomEnd)
-//            .padding(end = 5.dp, bottom = 10.dp)) {
-//            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            cameraLauncher.launch(cameraIntent)
-//        }
-//    }
+
+    Box(modifier = Modifier
+        .fillMaxSize()
+    ) {
+        SnapFab(modifier = Modifier.align(Alignment.BottomEnd)
+            .padding(end = 5.dp, bottom = 10.dp)) {
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraLauncher.launch(cameraIntent)
+        }
+    }
 }
 
 @Preview

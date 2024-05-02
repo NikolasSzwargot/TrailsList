@@ -104,13 +104,4 @@ fun TabletUI(vertical: Boolean, trails: List<Trail>,
             }
         }
     }
-
-//        selectedTrail?.let { trail: Trail ->
-//            Box(modifier = Modifier
-//                .fillMaxWidth(if (vertical) 1f else 0.5f)
-//                .fillMaxHeight(if (vertical) 0.5f else 1f)
-//                .align(if (vertical) Alignment.BottomEnd else Alignment.CenterEnd)) {
-//                TrailDetails(trail = trail, viewModel = viewModel)
-//            }
-//        }
 }

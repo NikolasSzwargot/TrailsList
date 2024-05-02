@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.com.trailslist.ui.theme.TrailTheme
 import edu.com.trailslist.viewmodels.TrailViewModel
 import kotlinx.coroutines.delay
 
@@ -59,6 +60,7 @@ fun Stopwatch(
         ) {
             Button(onClick = { isTracking = !isTracking
                              viewModel.updateIsTracking(isTracking)},
+                shape = TrailTheme.shape.button,
                 modifier = Modifier.padding(end = 8.dp)) {
                 Text(text = if (isTracking) "Stop" else "Start")
             }
@@ -67,6 +69,7 @@ fun Stopwatch(
                     isTracking = false
                     viewModel.updateIsTracking(isTracking)
                     viewModel.updateElapsedTime(elapsedTime)},
+                    shape = TrailTheme.shape.button,
                     modifier = Modifier.padding(end = 8.dp)) {
                     Text(text = "Reset")
                 }
@@ -78,7 +81,8 @@ fun Stopwatch(
                     elapsedTime = 0L
                     viewModel.updateElapsedTime(elapsedTime)
 
-                }) {
+                },
+                    shape = TrailTheme.shape.button) {
                     Text(text = "Zapisz")
                 }
             }

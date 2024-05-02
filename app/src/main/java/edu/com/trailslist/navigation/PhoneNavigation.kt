@@ -205,7 +205,7 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                                 }
                             }
                     ) {
-                        HomeScreen()
+                        HomeScreen(viewModel = viewModel)
                     }
                 }
                 composable("trailDetails/{trailId}/{trailName}/{trailDescription}/{trailImage}/{trailTime}/{type}") { backStackEntry ->

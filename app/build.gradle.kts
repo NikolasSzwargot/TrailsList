@@ -79,4 +79,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    implementation("me.onebone:toolbar-compose:2.3.2")
 }

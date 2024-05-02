@@ -5,18 +5,14 @@ import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -25,6 +21,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import edu.com.trailslist.compose.appcomponents.components.ListTopBar
 import edu.com.trailslist.compose.appcomponents.homecomponents.HomeScreen
 import edu.com.trailslist.compose.appcomponents.trailscomponents.TrailDetails
 import edu.com.trailslist.compose.appcomponents.trailscomponents.TrailsList
@@ -74,29 +71,17 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
         Scaffold(
             modifier = Modifier
                 .fillMaxSize(),
-            topBar = { TopAppBar(title = {
-                Text(text = "TrailApp")
-            },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            drawerState.open()
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Menu, contentDescription = "Navigation Menu")
-                    }
-                }
-            ) }
+            topBar = { ListTopBar(drawerState = drawerState, scope = scope) }
         ) { values ->
             NavHost(navController = navController, startDestination = "homeScreen") {
                 composable("lowlying") {
                     viewModel.setToLowLying()
+                    viewModel.detailsOpened = false
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(values)
-                            .pointerInput(Unit){
+                            .pointerInput(Unit) {
                                 detectHorizontalDragGestures { change, dragAmount ->
                                     if (dragAmount < -10) {
                                         navController.navigate("mountain")
@@ -113,11 +98,12 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                 }
                 composable("mountain") {
                     viewModel.setToMountain()
+                    viewModel.detailsOpened = false
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(values)
-                            .pointerInput(Unit){
+                            .pointerInput(Unit) {
                                 detectHorizontalDragGestures { change, dragAmount ->
                                     if (dragAmount < -10) {
                                         navController.navigate("homeScreen")
@@ -133,20 +119,21 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                     }
                 }
                 composable("homeScreen") {
+                    viewModel.detailsOpened = false
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(values)
-                            .pointerInput(Unit){
+                            .pointerInput(Unit) {
                                 detectHorizontalDragGestures { change, dragAmount ->
-                                        if (dragAmount < -10) {
-                                            navController.navigate("lowlying")
-                                            viewModel.selectedItemIndex = 1
-                                        } else if (dragAmount > 10) {
-                                            navController.navigate("mountain")
-                                            viewModel.selectedItemIndex = 2
-                                        }
+                                    if (dragAmount < -10) {
+                                        navController.navigate("lowlying")
+                                        viewModel.selectedItemIndex = 1
+                                    } else if (dragAmount > 10) {
+                                        navController.navigate("mountain")
+                                        viewModel.selectedItemIndex = 2
                                     }
+                                }
                             }
                     ) {
                         HomeScreen()
@@ -171,6 +158,7 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         trailTime,
                         type
                     )
+                    viewModel.detailsOpened = true
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

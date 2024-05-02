@@ -12,8 +12,8 @@ import edu.com.trailslist.viewmodels.TrailViewModel
 fun TrailApp(viewModel: TrailViewModel){
     val screenInfoData = screenInfo()
     val navController = rememberNavController()
-    if (screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Phone &&
-        screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Phone) {
+    if ((screenInfoData.screenWidthData is ScreenInfoData.ScreenType.Phone || screenInfoData.screenWidthData is ScreenInfoData.ScreenType.RotatedPhone) &&
+        (screenInfoData.screenHeightData is ScreenInfoData.ScreenType.Phone || screenInfoData.screenHeightData is ScreenInfoData.ScreenType.RotatedPhone)) {
         PhoneNavigation(navController = navController, viewModel = viewModel)
     }
     else {

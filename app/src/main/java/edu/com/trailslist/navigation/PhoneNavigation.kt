@@ -1,17 +1,25 @@
 package edu.com.trailslist.navigation
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -20,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -33,6 +42,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import edu.com.trailslist.compose.appcomponents.components.ListTopBar
 import edu.com.trailslist.compose.appcomponents.homecomponents.HomeScreen
+import edu.com.trailslist.compose.appcomponents.trailscomponents.SnapFab
 import edu.com.trailslist.compose.appcomponents.trailscomponents.TrailDetails
 import edu.com.trailslist.compose.appcomponents.trailscomponents.TrailsList
 import edu.com.trailslist.database.entities.Trail
@@ -40,10 +50,11 @@ import edu.com.trailslist.util.getNavItems
 import edu.com.trailslist.viewmodels.TrailViewModel
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
+import me.onebone.toolbar.ExperimentalToolbarApi
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalToolbarApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel){
@@ -52,6 +63,8 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val state = rememberCollapsingToolbarScaffoldState()
     val textSize = (18 + (30 - 12) * state.toolbarState.progress).sp
+    val cameraLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+    }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -89,7 +102,7 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
             scrollStrategy = if (!viewModel.detailsOpened || textSize.value == 18f) {
                 ScrollStrategy.ExitUntilCollapsed
             } else {
-                   ScrollStrategy.EnterAlways
+                   ScrollStrategy.ExitUntilCollapsed
                    },
             state = state,
             toolbar = {
@@ -105,15 +118,30 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                 
                 Image(painter = (painterResource(id = viewModel.selectedImageId)),
                     contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
+                    contentScale = ContentScale.FillBounds,
                     alpha = if (textSize.value == 18f) 0f else 1f,
-                    modifier = Modifier.fillMaxWidth())
-                    
-                    Text(
-                        text = "Szlak",
-                        style = TextStyle(color = Color.White, fontSize = textSize),
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    modifier = Modifier.fillMaxWidth()
+                        .height(300.dp))
+
+                    Row {
+                        IconButton(onClick = {
+                            scope.launch {
+                                drawerState.open()
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Menu, contentDescription = "Navigation Menu",
+                                tint = Color.White
+                            )
+                        }
+                        Text(
+                            text = viewModel.selectedTrailName,
+                            style = TextStyle(color = Color.White, fontSize = textSize),
+                            modifier = Modifier.padding(16.dp)
+                        )
+
+
+                    }
             }
             }
         ) {
@@ -200,6 +228,7 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         type
                     )
                     viewModel.selectedImageId = trailImage
+                    viewModel.selectedTrailName = trailName
                     viewModel.detailsOpened = true
                     Box(
                         modifier = Modifier
@@ -208,6 +237,18 @@ fun PhoneNavigation(navController: NavHostController, viewModel: TrailViewModel)
                         TrailDetails(trail, viewModel)
                     }
                 }
+            }
+        }
+    }
+    if (viewModel.detailsOpened) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            SnapFab(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 15.dp, bottom = 15.dp)
+            ) {
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                cameraLauncher.launch(cameraIntent)
             }
         }
     }
